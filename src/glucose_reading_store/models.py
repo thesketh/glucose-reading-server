@@ -47,7 +47,7 @@ class GlucoseReading(BaseModel):  # pylint: disable=too-few-public-methods
         cls, timestamp: dt.datetime
     ) -> dt.datetime:
         """Make sure recorded time is TZ-aware."""
-        if timestamp.tzinfo is None:
+        if timestamp.tzinfo is None:  # pragma: no-cover
             raise ValueError("`recorded_at` must be TZ-aware.")
         return timestamp
 

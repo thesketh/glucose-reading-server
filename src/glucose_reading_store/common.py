@@ -27,6 +27,6 @@ def format_as_tz_aware_iso(datetime: dt.datetime) -> str:
     from the timestamp.
 
     """
-    if datetime.tzinfo is None:
+    if datetime.tzinfo is None:  # pragma: no-cover
         datetime = datetime.astimezone(dt.timezone.utc)
     return datetime.replace(microsecond=0).isoformat()
