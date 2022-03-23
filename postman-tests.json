@@ -1,0 +1,711 @@
+{
+	"info": {
+		"_postman_id": "a935a156-babe-4544-abcb-0b53aa80f48c",
+		"name": "Sensyne Backend Tech Test API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Seed reading 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"var schema = {",
+							" \"type\":\"object\",",
+							"\"properties\": {",
+							"    \"reading_uuid\": {",
+							"        \"type\": \"string\",",
+							"    },",
+							"    \"patient_uuid\": {",
+							"        \"type\": \"string\",",
+							"    },",
+							"    \"value\": {",
+							"        \"type\": \"number\",",
+							"    },",
+							"    \"unit\": {",
+							"        \"type\": \"string\",",
+							"    },",
+							"    \"recorded_at\": {",
+							"        \"type\": \"string\",",
+							"    }",
+							"},",
+							"\"required\":[\"reading_uuid\",\"patient_uuid\",\"value\",\"unit\",\"recorded_at\"]",
+							"};",
+							"tests[\"Status code is 201\"] = responseCode.code === 201;",
+							"tests[\"Response body is valid\"] = tv4.validate(jsonData, schema, true, true);",
+							"if (tv4.error) {console.log(tv4.error);}",
+							"tests[\"Reading value is correct\"] = jsonData[\"value\"] == 5.5",
+							"pm.collectionVariables.set(\"reading_1_uuid\", jsonData[\"reading_uuid\"])"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"patient_uuid\": \"22c685ae-9249-4c84-9b6e-d0e3537be66e\",\n    \"value\": 5.5,\n    \"unit\": \"mmol/L\",\n\t\"recorded_at\": \"2021-01-01T09:15:00+00:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/v1/reading",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"reading"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Seed reading 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"tests[\"Status code is 201\"] = responseCode.code === 201;",
+							"",
+							"var schema = {",
+							" \"type\":\"object\",",
+							"\"properties\": {",
+							"    \"reading_uuid\": {",
+							"        \"type\": \"string\",",
+							"    },",
+							"    \"patient_uuid\": {",
+							"        \"type\": \"string\",",
+							"    },",
+							"    \"value\": {",
+							"        \"type\": \"number\",",
+							"    },",
+							"    \"unit\": {",
+							"        \"type\": \"string\",",
+							"    },",
+							"    \"recorded_at\": {",
+							"        \"type\": \"string\",",
+							"    }",
+							"},",
+							"\"required\":[\"reading_uuid\",\"patient_uuid\",\"value\",\"unit\",\"recorded_at\"]",
+							"};",
+							"",
+							"tests[\"Response body is valid\"] = tv4.validate(jsonData, schema, true, true);",
+							"if (tv4.error) {console.log(tv4.error);}",
+							"tests[\"Reading value is correct\"] = jsonData[\"value\"] == 7.2",
+							"",
+							"",
+							"pm.collectionVariables.set(\"reading_2_uuid\", jsonData[\"reading_uuid\"])",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"patient_uuid\": \"22c685ae-9249-4c84-9b6e-d0e3537be66e\",\n    \"value\": 7.2,\n    \"unit\": \"mmol/L\",\n\t\"recorded_at\": \"2021-01-01T12:30:00+00:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/v1/reading",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"reading"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Seed reading 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"var schema = {",
+							" \"type\":\"object\",",
+							"\"properties\": {",
+							"    \"reading_uuid\": {",
+							"        \"type\": \"string\",",
+							"    },",
+							"    \"patient_uuid\": {",
+							"        \"type\": \"string\",",
+							"    },",
+							"    \"value\": {",
+							"        \"type\": \"number\",",
+							"    },",
+							"    \"unit\": {",
+							"        \"type\": \"string\",",
+							"    },",
+							"    \"recorded_at\": {",
+							"        \"type\": \"string\",",
+							"    }",
+							"},",
+							"\"required\":[\"reading_uuid\",\"patient_uuid\",\"value\",\"unit\",\"recorded_at\"]",
+							"};",
+							"tests[\"Status code is 201\"] = responseCode.code === 201;",
+							"tests[\"Response body is valid\"] = tv4.validate(jsonData, schema, true, true);",
+							"if (tv4.error) {console.log(tv4.error);}",
+							"tests[\"Reading value is correct\"] = jsonData[\"value\"] == 5.1",
+							"pm.collectionVariables.set(\"reading_3_uuid\", jsonData[\"reading_uuid\"])"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"patient_uuid\": \"22c685ae-9249-4c84-9b6e-d0e3537be66e\",\n    \"value\": 5.1,\n    \"unit\": \"mmol/L\",\n\t\"recorded_at\": \"2021-01-01T16:45:00+00:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/v1/reading",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"reading"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check readings created",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"var reading_uuids = jsonData.map(a => a.reading_uuid);",
+							"var schema = {",
+							" \"type\":\"array\",",
+							" \"items\": {",
+							"    \"properties\": {",
+							"        \"reading_uuid\": {",
+							"            \"type\": \"string\",",
+							"        },",
+							"        \"patient_uuid\": {",
+							"            \"type\": \"string\",",
+							"        },",
+							"        \"value\": {",
+							"            \"type\": \"number\",",
+							"        },",
+							"        \"unit\": {",
+							"            \"type\": \"string\",",
+							"        },",
+							"        \"recorded_at\": {",
+							"            \"type\": \"string\",",
+							"        }",
+							"    },",
+							"    \"required\":[\"reading_uuid\",\"patient_uuid\",\"value\",\"unit\",\"recorded_at\"]",
+							"    }",
+							"};",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"tests['Length of array'] = jsonData.length >= 3;",
+							"tests[\"Response body is valid\"] = tv4.validate(jsonData, schema, true, true);",
+							"if (tv4.error) {console.log(tv4.error);}",
+							"tests['Reading 1 present'] = reading_uuids.includes(pm.collectionVariables.get(\"reading_1_uuid\"));",
+							"tests['Reading 2 present'] = reading_uuids.includes(pm.collectionVariables.get(\"reading_2_uuid\"));",
+							"tests['Reading 3 present'] = reading_uuids.includes(pm.collectionVariables.get(\"reading_3_uuid\"));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/v1/reading",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"reading"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a single reading",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status code is 204\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"value\": 3.0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/v1/reading/{{reading_1_uuid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"reading",
+						"{{reading_1_uuid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get single reading",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"tests[\"Check reading UUID\"] = jsonData.reading_uuid === pm.collectionVariables.get(\"reading_1_uuid\");",
+							"tests[\"Check patient UUID\"] = jsonData.patient_uuid === \"22c685ae-9249-4c84-9b6e-d0e3537be66e\";",
+							"tests[\"Check value\"] = jsonData.value === 3.0;",
+							"tests[\"Check unit\"] = jsonData.unit === \"mmol/L\";",
+							"tests[\"Check recorded at\"] = jsonData.recorded_at.startsWith(\"2021-01-01T09:15:00\"); // Don't worry about timezone"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/v1/reading/{{reading_1_uuid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"reading",
+						"{{reading_1_uuid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tear down reading 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status code is 204\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/v1/reading/{{reading_1_uuid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"reading",
+						"{{reading_1_uuid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tear down reading 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status code is 204\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/v1/reading/{{reading_2_uuid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"reading",
+						"{{reading_2_uuid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tear down reading 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status code is 204\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/v1/reading/{{reading_3_uuid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"reading",
+						"{{reading_3_uuid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check readings deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"var reading_uuids = jsonData.map(a => a.reading_uuid);",
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"tests['Reading 1 absent'] = !reading_uuids.includes(pm.collectionVariables.get(\"reading_1_uuid\"));",
+							"tests['Reading 2 absent'] = !reading_uuids.includes(pm.collectionVariables.get(\"reading_2_uuid\"));",
+							"tests['Reading 3 absent'] = !reading_uuids.includes(pm.collectionVariables.get(\"reading_3_uuid\"));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/v1/reading",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"reading"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get non-existent reading",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status code is 404\"] = responseCode.code === 404;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/v1/reading/6fe0dceb-7d6e-4d56-a3e8-a1b578b1d70f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"reading",
+						"6fe0dceb-7d6e-4d56-a3e8-a1b578b1d70f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update non-existent reading",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status code is 404\"] = responseCode.code === 404;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"value\": 100\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/v1/reading/6fe0dceb-7d6e-4d56-a3e8-a1b578b1d70f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"reading",
+						"6fe0dceb-7d6e-4d56-a3e8-a1b578b1d70f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete non-existent reading",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status code is 404\"] = responseCode.code === 404;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/v1/reading/6fe0dceb-7d6e-4d56-a3e8-a1b578b1d70f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"reading",
+						"6fe0dceb-7d6e-4d56-a3e8-a1b578b1d70f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create invalid reading",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status code is error\"] = responseCode.code >= 400;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"colour\": \"red\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/v1/reading",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"reading"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "reading_1_uuid",
+			"value": ""
+		},
+		{
+			"key": "reading_2_uuid",
+			"value": ""
+		},
+		{
+			"key": "reading_3_uuid",
+			"value": ""
+		}
+	]
+}
