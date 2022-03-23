@@ -3,7 +3,7 @@ A concreate implementation of the glucose reading store built
 on top of SQLAlchemy
 
 """
-
+import datetime as dt
 from types import TracebackType
 from typing import Iterator, Optional, Type, Union
 from uuid import UUID
@@ -30,10 +30,11 @@ class GlucoseReadingEntry(Base):
     # Ideally UUIDs would be BigIntegers but SQLite doesn't support
     # 128 bit integers.
     reading_uuid = Column(String(length=36), primary_key=True)
-    patient_uuid = Column(String(length=36))
-    value = Column(String)
-    units = Column(String)
-    recorded_at = Column(DateTime)
+    patient_uuid = Column(String(length=36), nullable=False)
+    # Store this as a string to maintain decimal precision.
+    value = Column(String, nullable=False)
+    units = Column(String, nullable=False)
+    recorded_at = Column(DateTime, nullable=False)
 
     @classmethod
     def from_reading(cls, reading: GlucoseReading):
@@ -43,17 +44,24 @@ class GlucoseReadingEntry(Base):
             patient_uuid=str(reading.patient_uuid),
             value=str(reading.value),
             units=reading.units,
-            recorded_at=reading.recorded_at,
+            # Store `recorded_at` in UTC so we can always retrieve it
+            # in the correct timezone.
+            recorded_at=reading.recorded_at.astimezone(dt.timezone.utc),
         )
 
     def to_reading(self) -> GlucoseReading:
         """Create a glucose reading from a database entry."""
+        recorded_time: dt.datetime = self.recorded_at  # type: ignore
+        # Some databases won't round-trip timezone information.
+        if recorded_time.tzinfo is None:
+            recorded_time = recorded_time.replace(tzinfo=dt.timezone.utc)
+
         return GlucoseReading(
             patient_uuid=self.patient_uuid,
             reading_uuid=self.reading_uuid,
             value=self.value,
             units=self.units,
-            recorded_at=self.recorded_at,
+            recorded_at=recorded_time,
         )
 
 

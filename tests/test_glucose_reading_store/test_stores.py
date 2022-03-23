@@ -29,7 +29,10 @@ from glucose_reading_store.stores import (
 def reading() -> Iterator[GlucoseReading]:
     """A sample glucose reading."""
     yield GlucoseReading(
-        patient_uuid=uuid4(), value="1.1", units="mmol/L", recorded_at=dt.datetime.now()
+        patient_uuid=uuid4(),
+        value="1.1",
+        units="mmol/L",
+        recorded_at=dt.datetime.utcnow().replace(tzinfo=dt.timezone.utc),
     )
 
 
@@ -101,7 +104,7 @@ def test_modify_reading(
             patient_uuid=reading.patient_uuid,
             value="23.0",
             units="mg/dL",
-            recorded_at=dt.datetime.now(),
+            recorded_at=dt.datetime.utcnow().replace(tzinfo=dt.timezone.utc),
         )
 
         store.update_reading(new_reading)

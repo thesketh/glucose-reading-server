@@ -6,7 +6,7 @@ from uuid import UUID, uuid4
 
 from pydantic import BaseModel, Field, validator  # pylint: disable=no-name-in-module
 
-from .common import parse_uuid
+from .common import parse_uuid, format_as_tz_aware_iso
 
 
 class GlucoseReading(BaseModel):  # pylint: disable=too-few-public-methods
@@ -41,3 +41,17 @@ class GlucoseReading(BaseModel):  # pylint: disable=too-few-public-methods
             return None
 
         return parse_uuid(uuid_value)
+
+    @validator("recorded_at")
+    def assert_tz_aware(  # pylint: disable=no-self-use,no-self-argument
+        cls, timestamp: dt.datetime
+    ) -> dt.datetime:
+        """Make sure recorded time is TZ-aware."""
+        if timestamp.tzinfo is None:
+            raise ValueError("`recorded_at` must be TZ-aware.")
+        return timestamp
+
+    class Config:  # pylint: disable=too-few-public-methods
+        """Configuration options for the Pydantic model."""
+
+        json_encoders = {dt.datetime: format_as_tz_aware_iso}
