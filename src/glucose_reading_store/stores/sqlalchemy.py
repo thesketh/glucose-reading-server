@@ -32,8 +32,8 @@ class GlucoseReadingEntry(Base):
     reading_uuid = Column(String(length=36), primary_key=True)
     patient_uuid = Column(String(length=36), nullable=False)
     # Store this as a string to maintain decimal precision.
-    value = Column(String, nullable=False)
-    unit = Column(String, nullable=False)
+    value = Column(String(length=10), nullable=False)
+    unit = Column(String(length=10), nullable=False)
     recorded_at = Column(DateTime, nullable=False)
 
     @classmethod
