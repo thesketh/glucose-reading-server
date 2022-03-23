@@ -100,6 +100,7 @@ class SQLAlchemyGlucoseReadingStore(AbstractGlucoseReadingStore):
         try:
             self._session.flush()
         except IntegrityError as err:
+            self._session.rollback()
             raise DuplicateReading(reading.reading_uuid) from err
 
     def update_reading(self, reading: GlucoseReading):
@@ -111,7 +112,11 @@ class SQLAlchemyGlucoseReadingStore(AbstractGlucoseReadingStore):
         current_entry.unit = new_entry.unit
         current_entry.recorded_at = new_entry.recorded_at
 
-        self._session.flush()
+        try:
+            self._session.flush()
+        except Exception as err:  # pylint: disable=broad-except
+            self._session.rollback()
+            raise err
 
     def get_reading(self, reading_uuid: Union[str, int, UUID]) -> GlucoseReading:
         entry = self._get_current_entry(str(parse_uuid(reading_uuid)))
@@ -119,8 +124,12 @@ class SQLAlchemyGlucoseReadingStore(AbstractGlucoseReadingStore):
 
     def delete_reading(self, reading_uuid: Union[int, str, UUID]):
         entry = self._get_current_entry(str(parse_uuid(reading_uuid)))
-        self._session.delete(entry)
-        self._session.flush()
+        try:
+            self._session.delete(entry)
+            self._session.flush()
+        except Exception as err:  # pylint: disable=broad-except
+            self._session.rollback()
+            raise err
 
     def iterate_readings(self) -> Iterator[GlucoseReading]:
         entry: GlucoseReadingEntry
@@ -129,16 +138,13 @@ class SQLAlchemyGlucoseReadingStore(AbstractGlucoseReadingStore):
 
     def __enter__(self):
         self.__session = self._session_factory()
-        self.__session.__enter__()
+        self._session.__enter__()
         return self
 
     def __exit__(
         self, exc_type: Type[Exception], exc_value: Exception, traceback: TracebackType
     ):
         if exc_type is None:
-            self.__session.flush()
             self.__session.commit()
-
-        return_value = self.__session.__exit__(exc_type, exc_value, traceback)  # type: ignore
+        self._session.__exit__(exc_type, exc_value, traceback)
         self.__session = None
-        return return_value
