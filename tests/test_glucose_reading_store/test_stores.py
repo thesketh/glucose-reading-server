@@ -31,7 +31,7 @@ def reading() -> Iterator[GlucoseReading]:
     yield GlucoseReading(
         patient_uuid=uuid4(),
         value="1.1",
-        units="mmol/L",
+        unit="mmol/L",
         recorded_at=dt.datetime.utcnow().replace(tzinfo=dt.timezone.utc),
     )
 
@@ -103,7 +103,7 @@ def test_modify_reading(
             reading_uuid=reading.reading_uuid,
             patient_uuid=reading.patient_uuid,
             value="23.0",
-            units="mg/dL",
+            unit="mg/dL",
             recorded_at=dt.datetime.utcnow().replace(tzinfo=dt.timezone.utc),
         )
 

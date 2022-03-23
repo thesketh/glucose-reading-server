@@ -22,7 +22,7 @@ class GlucoseReading(BaseModel):  # pylint: disable=too-few-public-methods
     of the reading.
 
     """
-    units: Literal["mmol/L", "mg/dL"]
+    unit: Literal["mmol/L", "mg/dL"]
     """
     The units of the glucose concentration in the patient's blood at the time
     of the reading.

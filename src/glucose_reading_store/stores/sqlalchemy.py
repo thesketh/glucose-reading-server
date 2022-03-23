@@ -33,7 +33,7 @@ class GlucoseReadingEntry(Base):
     patient_uuid = Column(String(length=36), nullable=False)
     # Store this as a string to maintain decimal precision.
     value = Column(String, nullable=False)
-    units = Column(String, nullable=False)
+    unit = Column(String, nullable=False)
     recorded_at = Column(DateTime, nullable=False)
 
     @classmethod
@@ -43,7 +43,7 @@ class GlucoseReadingEntry(Base):
             reading_uuid=str(reading.reading_uuid),
             patient_uuid=str(reading.patient_uuid),
             value=str(reading.value),
-            units=reading.units,
+            unit=reading.unit,
             # Store `recorded_at` in UTC so we can always retrieve it
             # in the correct timezone.
             recorded_at=reading.recorded_at.astimezone(dt.timezone.utc),
@@ -60,7 +60,7 @@ class GlucoseReadingEntry(Base):
             patient_uuid=self.patient_uuid,
             reading_uuid=self.reading_uuid,
             value=self.value,
-            units=self.units,
+            unit=self.unit,
             recorded_at=recorded_time,
         )
 
@@ -108,7 +108,7 @@ class SQLAlchemyGlucoseReadingStore(AbstractGlucoseReadingStore):
 
         current_entry.patient_uuid = new_entry.patient_uuid
         current_entry.value = new_entry.value
-        current_entry.units = new_entry.units
+        current_entry.unit = new_entry.unit
         current_entry.recorded_at = new_entry.recorded_at
 
         self._session.flush()
@@ -135,6 +135,10 @@ class SQLAlchemyGlucoseReadingStore(AbstractGlucoseReadingStore):
     def __exit__(
         self, exc_type: Type[Exception], exc_value: Exception, traceback: TracebackType
     ):
+        if exc_type is None:
+            self.__session.flush()
+            self.__session.commit()
+
         return_value = self.__session.__exit__(exc_type, exc_value, traceback)  # type: ignore
         self.__session = None
         return return_value
