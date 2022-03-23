@@ -21,11 +21,11 @@ extra_requirements = {
 }
 
 setup(
-    name="sensyne-glucose-readings",
+    name="glucose-reading-store",
     version="0.0.1",
     author="Travis Hesketh",
     author_email="travis@hesketh.scot",
-    description="Tech test submission for Sensyne.",
+    description="CRUD application to track glucose readings for diabetic patients.",
     classifiers=[
         "Programming Language :: Python :: 3",
         "Operating System :: OS Independent",
